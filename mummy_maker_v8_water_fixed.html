@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#173936"><title>MUMMY MAKER | 古埃及木乃伊製作師 — 全螢幕修正版</title>
+<style>
+:root{--teal:#173a37;--light:#fbf0d6;--gold:#d6ab58;--sepia:#8d6a3d;--ink:#293832;--cream:#fff7e3;--rim:#c7a765}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#0d2525;color:var(--ink);font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif}body{overflow-x:hidden}button{font:inherit;cursor:pointer}button:focus-visible{outline:3px solid #f1bd58;outline-offset:3px}button:disabled{cursor:not-allowed;opacity:.48}button:active{transform:translateY(1px)}.app{max-width:1680px;min-height:100vh;margin:auto;background:#e4ca99;box-shadow:0 0 70px #051818}
+header{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:86px;padding:12px clamp(12px,2vw,32px);color:#f5e2b2;background:#173a37;border-bottom:5px solid #be944b}.brand{display:flex;align-items:center;gap:13px;min-width:220px}.logo{border:2px solid #edc66f;width:47px;height:47px;display:grid;place-items:center;border-radius:50%;font:900 24px Georgia,serif}.brand strong{display:block;font-family:Georgia,serif;font-size:clamp(17px,1.9vw,27px);letter-spacing:.07em}.brand small{display:block;font-size:11px;letter-spacing:.06em;color:#d1d7c4}.topbuttons{display:flex;gap:7px}.ico{height:39px;min-width:40px;padding:0 9px;background:#2d514b;border:1px solid #68827a;border-radius:9px;color:#fff2d0;font-size:15px;font-weight:800}.ico:hover{background:#437467}.ico svg{width:18px;height:18px;vertical-align:middle}
+.nav{display:flex;overflow-x:auto;scrollbar-width:thin;gap:6px;padding:11px 20px;background:#234943;border-bottom:1px solid #d3b46f;justify-content:center}.nav button{flex:0 0 auto;min-width:92px;text-align:center;border:1px solid #66847c;border-radius:8px;padding:5px 8px;background:#1b3b38;color:#deebdf;font-size:11px}.nav button small{display:block;font-size:10px;color:#b8c8be;margin-top:1px}.nav button .num{font-size:11px;color:#e8c27b;padding-right:5px}.nav button.active{background:#e1be79;border-color:#f9dda4;color:#233d36;font-weight:900}.nav button.active small,.nav button.active .num{color:#34544b}.nav button.done{border-color:#9acaac;background:#315d50}
+.scene{position:relative;background:#b79b6d;min-height:450px;height:clamp(480px,calc(100vh - 284px),760px);overflow:hidden}.world{display:block;width:100%;height:100%;touch-action:none;-webkit-user-select:none;user-select:none}.world .interactive{cursor:grab;touch-action:none}.world .interactive:active{cursor:grabbing}.world .shimmer{filter:url(#halo);animation:glowBreathe 2s ease-in-out infinite}.world .tool-obj{cursor:pointer;filter:url(#halo)}.world .organ-piece{cursor:grab;filter:url(#smallGlow)}.world .organ-piece:hover,.world .organ-piece.drag-active{filter:url(#halo)}.world .selectable{cursor:pointer}.world .selectable:hover{filter:url(#halo)}.world .pointer-none{pointer-events:none}.world text{font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif}#dragLayer{pointer-events:none}.sparkle{animation:glowBreathe 1.5s infinite}
+.leftbox{position:absolute;left:clamp(8px,2vw,27px);top:18px;max-width:230px;width:21%;min-width:170px;padding:13px 15px;border-radius:9px;background:#fdf1d6ee;border-top:5px solid #af833c;box-shadow:0 14px 28px #2d211a45;pointer-events:none}.leftbox>*{pointer-events:auto}.eyebrow{color:#8d6633;font-size:10px;font-weight:900;letter-spacing:.08em}.leftbox h2{font-size:clamp(16px,1.5vw,23px);line-height:1.25;margin:9px 0 3px}.en{font-size:clamp(11px,.92vw,14px);color:#74684c;line-height:1.45}.leftbox p{font-size:12px;line-height:1.6;margin:9px 0;color:#5f594d}.helpbutton{width:100%;margin-top:8px;padding:8px;border:1px solid #c2a66e;background:#fae7bf;border-radius:7px;text-align:left;color:#34574c;font-weight:800;font-size:12px}.hint{display:none;font-size:12px;background:#e7e9d7;padding:10px;border-left:3px solid #427a6f;border-radius:4px;margin-top:7px;line-height:1.6}.hint.open{display:block}
+.stat{position:absolute;right:clamp(8px,2vw,27px);top:18px;min-width:158px;width:16%;background:#133c37e9;border:1px solid #d2ad65;color:#f9e2ac;border-radius:11px;padding:13px 13px 17px;pointer-events:none;box-shadow:0 11px 25px #1c2b2759}.stat span{font-size:11px;opacity:.93}.stat strong{font-size:22px;display:block;margin:7px 0 9px}.rail{height:10px;background:#57716a;border-radius:6px;overflow:hidden}.rail div{width:0;height:100%;background:linear-gradient(90deg,#d4a34d,#fbe3a9);transition:width .25s}.day{font:700 16px Georgia,serif;letter-spacing:.05em;margin-top:12px}.cue{position:absolute;bottom:13px;left:50%;transform:translateX(-50%);max-width:90%;border:1px solid #e7c379;border-radius:28px;padding:8px 22px;background:#214943e8;color:#fff0c8;font-size:13px;text-align:center;pointer-events:none}.toast{position:absolute;left:50%;top:13%;transform:translate(-50%,-20px);z-index:4;opacity:0;pointer-events:none;background:#fff2cf;border:2px solid #cf9858;color:#304538;border-radius:14px;box-shadow:0 12px 35px #1119;max-width:min(600px,80%);text-align:center;padding:13px 24px;font-weight:850;transition:opacity .2s,transform .2s}.toast.show{opacity:1;transform:translate(-50%,0)}.toast.error{background:#fbe2d4;border-color:#aa6349}
+.foot{background:#fff2d7;border-top:5px solid #bd9a5c;padding:16px clamp(12px,3vw,46px);display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:130px}.task{display:flex;align-items:center;gap:15px}.stepnum{flex:0 0 auto;width:55px;height:55px;display:grid;place-items:center;border-radius:12px;background:#dab774;border:2px solid #80623b;font:900 25px Georgia,serif}.task h3{margin:0 0 5px;font-size:clamp(16px,1.45vw,21px)}.task p{margin:0;font-size:13px;color:#655e50}.footbuttons{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}.btn{border-radius:9px;padding:12px 18px;font-weight:900;border:1px solid #91ac9d;color:#245246;background:transparent}.btn.primary{background:#173f39;color:#ffedc5;border-color:#0c2c28;box-shadow:0 4px #0a2a27}.btn:hover:not(:disabled){filter:brightness(1.08)}.btn.secondary{background:#fff8eb}.control-row{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;padding:10px;background:#e9d6b5;border-top:1px solid #caaf80}.control-row button{border:1px solid #ae9567;background:#fff4dc;color:#4a4936;border-radius:8px;padding:7px 13px;font-weight:800;font-size:12px}.control-row button.on{background:#245249;color:#fbe1a3;border-color:#173b34}.control-row:empty{display:none}
+.overlay{position:fixed;inset:0;z-index:10;background:#071c1bdd;display:flex;justify-content:center;align-items:center;padding:18px;backdrop-filter:blur(4px)}.overlay[hidden]{display:none}.welcome{width:min(850px,100%);display:grid;grid-template-columns:minmax(240px,.85fr) 1fr;background:#faf0d9;border:2px solid #d6b16b;border-radius:16px;overflow:hidden;box-shadow:0 30px 90px #0008}.welcome-art{background:#b48e59;min-height:420px;display:grid;place-items:center;padding:20px}.welcome-art svg{width:100%;max-height:350px}.welcome-body{padding:clamp(20px,4vw,49px);display:flex;flex-direction:column;justify-content:center;gap:13px}.welcome h1{font:900 clamp(38px,4.5vw,62px)/1.0 Georgia,serif;margin:5px 0;color:#234640}.welcome h2{margin:0;font-size:22px}.welcome p{line-height:1.7;font-size:14px;color:#625b4d}.welcome small{font-size:11px;color:#837257}.welcome-actions{display:flex;flex-wrap:wrap;gap:10px}.welcome-actions button{flex:1 1 160px}.lobby-kicker{letter-spacing:.1em;font-size:11px;color:#9c763c;font-weight:900}
+@keyframes glowBreathe{50%{filter:drop-shadow(0 0 11px #fff0a4) drop-shadow(0 0 11px #fff6b6)}}@keyframes flame{50%{transform:scale(.88) rotate(2deg);opacity:.8}}.torch-fire{animation:flame 1.6s infinite alternate;transform-box:fill-box;transform-origin:center bottom}
+@media(max-width:1000px){.brand{min-width:0}.nav{justify-content:flex-start}.leftbox{min-width:145px;max-width:190px;padding:9px}.stat{min-width:130px}.scene{height:clamp(470px,57vw,700px)}}
+@media(max-width:690px){header{min-height:62px;padding:8px}.brand strong{font-size:16px}.brand small{font-size:9px}.logo{display:none}.ico{height:35px;min-width:34px;padding:0 6px}.nav{padding:6px;gap:5px}.nav button{min-width:76px;font-size:10px}.scene{height:430px;min-height:430px}.leftbox{left:4px;top:6px;width:42%;max-width:185px;min-width:0;padding:7px 9px}.leftbox h2{font-size:14px;margin:3px 0}.leftbox p,.hint{font-size:10px;margin:4px 0}.en{font-size:10px}.helpbutton{margin-top:4px;padding:5px;font-size:10px}.stat{right:5px;top:6px;padding:7px;min-width:88px;width:25%}.stat strong{font-size:13px;margin:4px 0}.stat span{font-size:9px}.day{font-size:11px;margin-top:6px}.cue{font-size:10px;bottom:5px;padding:6px 10px;white-space:normal}.foot{padding:10px;display:grid;gap:10px}.task{gap:9px}.stepnum{width:43px;height:43px;font-size:20px}.task h3{font-size:14px}.task p{font-size:11px}.footbuttons .btn{padding:9px 11px;font-size:12px}.welcome{grid-template-columns:1fr}.welcome-art{min-height:145px;max-height:175px}.welcome-art svg{max-height:135px}.welcome-body{padding:23px}.welcome h1{font-size:37px}.welcome h2{font-size:17px}.welcome p{font-size:12px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* V6: responsive touch controls, safe scrolling outside the SVG; on-stage hints never cover canopic-jar labels. */
+html,body{overscroll-behavior-x:none;-webkit-tap-highlight-color:transparent}
+.world,button,.nav{-webkit-touch-callout:none;user-select:none;-webkit-user-select:none}
+#world{touch-action:none;contain:layout paint}
+#world .linen-region{pointer-events:none}
+.scene[data-stage="3"] .cue{bottom:auto;top:15%;left:50%;max-width:47%;font-size:12px;padding:7px 13px}
+.scene[data-stage="3"] .stat{z-index:4}
+@media (min-width:1400px){.scene{height:clamp(570px,calc(100svh - 282px),880px)}.leftbox{max-width:245px}.stat{min-width:185px}}
+@media (min-width:690px) and (max-width:1100px){.scene{height:clamp(490px,60vw,700px)}.leftbox{width:19%;min-width:150px}.scene[data-stage="3"] .cue{top:18%;left:57%;max-width:40%}}
+@media (max-width:689px){
+ .scene{height:clamp(455px,72svh,670px);min-height:450px}
+ .leftbox{width:48%;max-width:240px;min-width:0}.stat{width:31%;max-width:150px;min-width:0}
+ .scene[data-stage="3"] .cue{top:auto;bottom:5px;left:50%;max-width:94%;padding:5px 8px;font-size:10px}
+ .footbuttons{display:flex;width:100%;justify-content:stretch}.footbuttons button{flex:1;min-height:48px}
+ .nav button{min-height:49px}.ico{min-height:42px;min-width:42px}
+ .cue{padding:8px 11px;max-width:94%;font-size:11px}
+}
+@media (pointer:coarse){button,.ico,.nav button{touch-action:manipulation}.btn{min-height:48px}.world{touch-action:none}}
+
+/* Portrait mobile: place the instructions and progress ABOVE the scene, no wasted vertical bars */
+@media (max-width:689px){
+ .scene{display:grid;grid-template-columns:minmax(0,1.38fr) minmax(0,1fr);grid-template-rows:auto auto auto;gap:5px;padding:7px 5px;background:#b59a74;min-height:0;height:auto;overflow:visible}
+ .world{grid-column:1 / -1;grid-row:2;min-width:0;width:100%;height:auto;aspect-ratio:1280 / 700;align-self:start;border-radius:6px}
+ .leftbox,.stat{position:relative;left:auto;right:auto;top:auto;bottom:auto;max-width:none;min-width:0;width:100%;height:auto;margin:0;box-shadow:none;border-radius:8px;padding:9px}
+ .leftbox{grid-column:1;grid-row:1}.stat{grid-column:2;grid-row:1}
+ .leftbox p{font-size:11px;line-height:1.4;margin:5px 0}.leftbox h2{margin:5px 0 2px}.leftbox .en{line-height:1.3}.stat strong{font-size:18px}
+ .cue,.scene[data-stage="3"] .cue{position:relative;grid-column:1 / -1;grid-row:3;max-width:100%;width:100%;left:auto;top:auto;bottom:auto;transform:none;padding:8px;margin:0;border-radius:9px}
+ .toast{z-index:8;top:47%;left:50%;max-width:94%;}
+}
+
+/* Fullscreen modal: both lobby and completion share the fullscreen element. */
+.app:fullscreen,.app:-webkit-full-screen{width:100%;max-width:none;height:100dvh;min-height:100dvh;overflow-y:auto;overflow-x:hidden}
+.app:fullscreen > .overlay,.app:-webkit-full-screen > .overlay{position:fixed;inset:0;z-index:10000;overflow-y:auto;overscroll-behavior:contain}
+.app:fullscreen .welcome,.app:-webkit-full-screen .welcome{max-height:calc(100dvh - 24px);overflow-y:auto}
+</style></head>
+<body oncontextmenu="return false"><div class="app" id="app">
+<header><div class="brand"><div class="logo">𓂀</div><div><strong>MUMMY MAKER</strong><small>古埃及木乃伊製作師 · ANCIENT EGYPT</small></div></div><div class="topbuttons"><button class="ico" id="orderBtn" title="切換雙語順序 / Swap language order">中 / EN</button><button class="ico" id="soundBtn" title="音效 / Sound">♫</button><button class="ico" id="fullscreenBtn" title="全螢幕 / Fullscreen">⛶</button><button class="ico" id="homeBtn" title="大廳 / Lobby">⌂</button></div></header>
+<nav class="nav" id="nav"></nav>
+<div class="scene" id="scene"><svg class="world" id="world" viewBox="0 0 1280 700" preserveAspectRatio="xMidYMid meet" aria-label="Ancient Egyptian mummification workshop" role="img">
+<defs>
+<linearGradient id="wallG" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#f4ddaf"/><stop offset=".72" stop-color="#c8a16a"/><stop offset="1" stop-color="#a77e4e"/></linearGradient>
+<linearGradient id="floorG" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#aa855a"/><stop offset="1" stop-color="#6e513b"/></linearGradient>
+<linearGradient id="stoneG" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#d0c6b4"/><stop offset=".58" stop-color="#b4b6b5"/><stop offset="1" stop-color="#868c8a"/></linearGradient>
+<linearGradient id="bodyG" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#e4a180"/><stop offset="1" stop-color="#cb7d5d"/></linearGradient>
+<linearGradient id="dryG"><stop stop-color="#ba8360"/><stop offset="1" stop-color="#906044"/></linearGradient>
+<pattern id="wallTexture" width="72" height="54" patternUnits="userSpaceOnUse"><path d="M7 13l5-2M43 37l8 2M61 14l-3 6" stroke="#9c794e" stroke-width="1.5" opacity=".16"/></pattern>
+<pattern id="linenStripes" width="28" height="26" patternUnits="userSpaceOnUse" patternTransform="rotate(-37)"><rect width="28" height="26" fill="#f1e2bc"/><path d="M3 0V26M25 0V26" stroke="#9b8664" stroke-width="2.3"/><path d="M10 0V26" stroke="#fcf4dc" stroke-width="3"/></pattern><pattern id="towelPattern" width="24" height="24" patternUnits="userSpaceOnUse"><rect width="24" height="24" fill="#efe2cb"/><path d="M0 6H24M0 18H24" stroke="#dbc7a6" stroke-width="3" opacity=".7"/><path d="M6 0V24M18 0V24" stroke="#fff8eb" stroke-width="2" opacity=".75"/></pattern>
+<filter id="softShadow" x="-30%" y="-40%" width="170%" height="200%"><feGaussianBlur stdDeviation="11"/></filter>
+<filter id="halo" x="-80%" y="-100%" width="260%" height="300%"><feGaussianBlur stdDeviation="9" result="blur"/><feFlood flood-color="#fff1a2" flood-opacity=".96"/><feComposite in2="blur" operator="in" result="glow"/><feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<filter id="smallGlow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur in="SourceAlpha" stdDeviation="5" result="blur"/><feFlood flood-color="#fbe7a4" flood-opacity=".75"/><feComposite in2="blur" operator="in" result="glow"/><feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<clipPath id="bodyClip"><ellipse cx="355" cy="379" rx="75" ry="57"/><path d="M419 354Q479 319 551 330Q639 337 733 354L837 353Q946 365 1068 370L1097 329Q1127 322 1105 427L813 443Q717 447 626 445L491 448Q453 435 419 403Z"/><path d="M469 401Q585 403 747 415L756 442Q627 460 501 445Z"/></clipPath>
+<clipPath id="clipLegs"><path d="M800 345Q904 347 1025 369L1067 358Q1094 383 1075 440L807 445Q786 423 800 345Z"/></clipPath>
+<clipPath id="clipFoot"><path d="M1058 367Q1075 384 1078 342Q1080 323 1097 322Q1117 326 1108 402Q1104 429 1073 431L1047 431Q1063 408 1058 367Z"/></clipPath>
+<clipPath id="clipTorso"><path d="M518 327Q640 329 813 350L819 437Q704 450 514 440Z"/></clipPath>
+<clipPath id="clipShoulderFar"><path d="M421 350Q458 326 514 331L572 338 570 383 446 391Z"/></clipPath>
+<clipPath id="clipShoulderNear"><path d="M435 394Q474 386 531 399L562 425 544 452 460 438Z"/></clipPath>
+<clipPath id="clipArms"><path d="M469 399Q598 403 744 413L760 442Q624 461 477 446Z"/></clipPath>
+<clipPath id="clipHead"><ellipse cx="355" cy="379" rx="76" ry="57"/></clipPath>
+</defs>
+<g id="backdrop"><!-- architecture / painted atmosphere -->
+<rect width="1280" height="700" fill="url(#wallG)"/>
+<rect width="1280" height="700" fill="url(#wallTexture)"/>
+<path d="M0 0H1280V86H0Z" fill="#5c5944" opacity=".27"/>
+<path d="M0 120 H1280 M0 128H1280" stroke="#e8cc8e" stroke-width="13" opacity=".75"/>
+<path d="M0 545 H1280 V700 H0Z" fill="url(#floorG)"/>
+<path d="M0 570 L1280 570 M0 652 L1280 652 M290 570 L240 700 M630 570 L620 700 M990 570 L1055 700" fill="none" stroke="#6c513c" stroke-width="3" opacity=".38"/>
+<!-- wall entrance -->
+<path d="M389 440 V201 Q389 125 500 123 H838 Q935 136 935 214 V442Z" fill="#8b6b48" stroke="#e3c389" stroke-width="16"/>
+<path d="M424 425V226Q424 164 514 163H812Q900 166 900 225V425Z" fill="#a1845c"/>
+<path d="M457 419 V230 Q457 198 505 198 H820 Q869 198 869 232 V419 Z" fill="#e1c189" opacity=".36"/>
+<path d="M466 406 H862 M466 351H862 M466 294H862" stroke="#b38b51" stroke-width="4" opacity=".36"/>
+<!-- back relief fresco -->
+<g stroke="#42645d" stroke-width="4" fill="none" opacity=".64" stroke-linecap="round">
+  <path d="M506 239q11 -18 23 0v23h-23zm28 32h-32M554 239q10 7 0 17t0 17M579 235v38m-10 -26h21M611 238l12 7-12 9 12 11M645 233v36m-10-29q23 0 5 21M678 233q-15 14 0 27t15 -1M718 239h25m-25 13h25M779 239l13 14 13 -14m-13 14v17M829 239q-11 9-1 22"/>
+  <path d="M508 329q12-17 24 0v18h-24M568 322l-15 24h30M616 320v31m-8-21h20M660 321q30 20 0 35M711 318l13 29 13-29M772 323l-10 13 10 13 10-13"/>
+</g>
+<!-- side columns -->
+<g stroke="#654b32" stroke-width="4">
+<rect x="27" y="99" width="93" height="474" rx="8" fill="#c9a569"/><rect x="1158" y="99" width="95" height="474" rx="8" fill="#c9a569"/>
+<path d="M14 102 Q75 44 134 102L117 143H32Z" fill="#31665d"/><path d="M1142 102Q1205 44 1267 102L1251 143H1163Z" fill="#31665d"/>
+<path d="M31 141H117 M1163 141H1250 M28 545H120M1158 545H1253" stroke="#e9c884" stroke-width="16"/>
+<path d="M48 171V520M74 171V520M101 171V520M1182 171V520M1209 171V520M1235 171V520" stroke="#e6c58d" stroke-width="5"/>
+</g>
+<!-- shelves and ceramics -->
+<g transform="translate(970 190)" stroke="#563f2e" stroke-width="4" stroke-linejoin="round">
+ <path d="M0 23H150V39H0Z" fill="#6e4c35"/>
+ <path d="M13 10Q8-17 33-13Q55-17 49 12L42 24H23Z" fill="#a77c51"/>
+ <path d="M72 1Q63-20 90-25Q116-18 104 3L101 23H78Z" fill="#5f8174"/>
+ <path d="M120 10Q112-6 130-11Q147-10 145 12L143 24H123Z" fill="#cb9861"/>
+ <path d="M4 77H153V93H4Z" fill="#70533b"/>
+ <path d="M19 66Q5 42 24 34H42Q54 48 46 69Z" fill="#dfc488"/><path d="M74 69Q60 40 78 38H94Q109 56 99 69Z" fill="#ddb77a"/><path d="M125 71Q110 44 125 37H144Q155 52 147 73Z" fill="#d4a46c"/>
+</g>
+<!-- decorative jars near the floor -->
+<g stroke="#513f2b" stroke-width="4" transform="translate(66 443)">
+ <path d="M10 60Q-6 22 16 16H52Q72 24 56 60L48 107H18Z" fill="#af8050"/>
+ <path d="M24 14V1H45V14 M18 49H56" fill="none"/>
+ <path d="M78 67Q64 43 80 30H108Q124 44 109 67L101 113H83Z" fill="#6c9084"/>
+ <path d="M82 57H109 M88 74h16"/>
+</g>
+<!-- hanging light -->
+<g transform="translate(1060 124)"><path d="M0 0V110" stroke="#4d4730" stroke-width="5"/><path d="M-25 99H25L15 124H-15Z" fill="#80623d" stroke="#372b21" stroke-width="4"/><ellipse cx="0" cy="96" rx="9" ry="21" fill="#f6cb65" class="torch-fire"/><ellipse cx="0" cy="101" rx="5" ry="12" fill="#fff3b2" class="torch-fire"/></g>
+<!-- glimmer and paper texture -->
+<circle cx="365" cy="180" r="5" fill="#ffe9bb" opacity=".3" class="dust-spot"/><circle cx="850" cy="114" r="4" fill="#ffe9bb" opacity=".3" class="dust-spot"/><circle cx="966" cy="248" r="3" fill="#fff7d9" opacity=".5" class="dust-spot"/>
+<!-- large stone slab -->
+<ellipse cx="635" cy="591" rx="530" ry="53" fill="#2d231c" opacity=".27" filter="url(#softShadow)"/>
+<g id="stoneTable" stroke="#464c47" stroke-width="5" stroke-linejoin="round">
+ <rect x="220" y="459" width="880" height="158" rx="5" fill="url(#stoneG)"/>
+ <rect x="210" y="446" width="902" height="70" rx="6" fill="#bfc1c0"/>
+ <path d="M210 513H1111M220 555H1100M440 449V514M716 449V514M907 449V514" fill="none"/>
+ <path d="M319 557q8 12-3 21m138 1q-7 11 6 24m151-45q10 9-4 19m171 3q4 9-8 18m180-25q-8 11 7 20" stroke-width="2.5" fill="none"/>
+ <path d="M256 475l22 2m298 10l19-4m240 1l22 0m173 8 18-7" stroke-width="3" fill="none" opacity=".5"/>
+</g>
+</g>
+<g id="actor"></g><g id="stageProps"></g><g id="dragLayer"></g>
+<g id="towelCursor" aria-hidden="true" pointer-events="none" visibility="hidden" transform="translate(-100 -100)">
+<g transform="rotate(-18)"><rect x="-33" y="-24" width="66" height="48" rx="8" fill="url(#towelPattern)" stroke="#7a684c" stroke-width="3"/>
+<path d="M-25-16H25M-25 0H25M-25 16H25" stroke="#fff9e9" opacity=".68" stroke-width="2"/>
+<path d="M-23-26V24" stroke="#e3cba5" stroke-width="3"/></g>
+</g></svg>
+<div class="leftbox"><div class="eyebrow" id="eyebrow">STEP 01 / 10</div><h2 id="titleZh"></h2><div class="en" id="titleEn"></div><p id="description"></p><button class="helpbutton" id="hintBtn">※ 提示 / Hint</button><div class="hint" id="hint"></div></div>
+<div class="stat"><span>製作進度 / Progress</span><strong id="counter">0 / 0</strong><div class="rail"><div id="bar"></div></div><div class="day" id="day">DAY 01</div></div>
+<div class="cue" id="cue"></div><div class="toast" id="toast" role="status"></div></div>
+<div class="control-row" id="controls"></div>
+<div class="foot"><div class="task"><div class="stepnum" id="stepNum">01</div><div><h3 id="footTitle"></h3><p id="footDesc"></p></div></div><div class="footbuttons"><button class="btn secondary" id="retryBtn">↺ 重做 / Retry</button><button class="btn primary" id="nextBtn" disabled>完成後繼續 / Complete to continue</button></div></div>
+<div class="overlay" id="lobby"><div class="welcome"><div class="welcome-art"><svg viewBox="0 0 400 360" aria-hidden="true"><rect width="400" height="360" fill="#b99664"/><path d="M0 0H400V53H0Z" fill="#2b5750"/><path d="M10 57H390V75H10Z" fill="#edcf8e"/><g fill="none" stroke="#f0da9d" stroke-width="4"><path d="M48 12v29m-10-18h20 M98 15l15 22 15-22M173 13v26m-11-12h22 M239 14q18 15 0 26m55-24v24 M347 15q-18 12 0 24"/></g><rect x="27" y="174" width="346" height="146" fill="#aeb5b5" stroke="#313a38" stroke-width="5"/><rect x="19" y="164" width="361" height="50" fill="#c5c5c3" stroke="#303937" stroke-width="5"/><path d="M75 169Q59 155 71 130Q81 109 104 108Q122 107 136 126Q158 136 176 139Q243 132 315 149L338 116Q360 118 348 171H125Q106 179 85 172Z" fill="#dc9874" stroke="#1d1d1c" stroke-width="5"/>
+<path d="M241 142l37 4q10 12 4 28h-44Z" fill="#fff4d9" stroke="#262625" stroke-width="4"/>
+<path d="M73 139Q62 111 100 104Q130 103 140 125Q124 118 109 125Q85 125 73 139Z" fill="#41291e" stroke="none"/>
+
+<g transform="translate(288 248)" stroke="#302821" stroke-width="4"><path d="M-60 14Q-68-37-44-47Q-29-55-20-35L-25 67H-57Z" fill="#e3bd74"/><path d="M-42-46Q-47-70-29-77Q-10-73-13-46Z" fill="#a9603f"/><path d="M-4 16Q-18-40 7-49Q34-50 39-19L24 67H-3Z" fill="#efd193"/><path d="M2-44L25-45 34-64 19-75 5-64Z" fill="#475850"/></g></svg></div><div class="welcome-body"><div class="lobby-kicker">ANCIENT EGYPT · INTERACTIVE WORKSHOP</div><h1>MUMMY<br>MAKER</h1><h2 id="lobbyTitle">古埃及木乃伊製作師</h2><p id="lobbyDesc">十個連續步驟，親手完成清潔、器官處理、器官罐保存、泡鹼乾燥、香油塗抹、亞麻布包紮、護身符、面具及入棺儀式。<br><b>10 hands-on steps · 中文 + English</b></p><div class="welcome-actions"><button class="btn primary" id="newBtn">開始新遊戲 / New game</button><button class="btn secondary" id="resumeBtn" hidden>繼續進度 / Continue</button></div><small>本遊戲使用原創內嵌 SVG 素材；參考影片的教學圖解風格，不直接重製影片圖像。<br>Historical note: procedures differed by time and social status; this is a simplified educational simulation.</small></div></div></div>
+</div><!-- /app: fullscreen modal remains within fullscreen subtree -->
+<script>(()=>{'use strict';
+const $=id=>document.getElementById(id), svg=$('world'), scene=$('scene'), NS='http://www.w3.org/2000/svg';
+const labels=[['清潔身體','Wash the Body'],['處理腦部','Prepare the Brain'],['取出器官','Remove the Organs'],['保存器官','Canopic Jars'],['泡鹼乾燥','Cover with Natron'],['塗抹香油','Apply Oils & Resin'],['亞麻布包紮','Wrap the Body'],['放置護身符','Place the Amulets'],['裝上面具','Add the Mask'],['祝禱與入棺','Ritual & Burial']];
+const details=[
+ ['先用清水完整淋濕全身，再用布巾將殘留水痕擦拭乾淨。','Pour water over the whole body first, then wipe away every wet area with the cloth.'],
+ ['拖曳示意工具到鼻部，再將腦部模型移至處理盆。','Drag the teaching tool to the nose. Move the brain model into the disposal bowl.'],
+ ['逐一拖曳器官到保存盤，觀察是否有某個器官不應被取出。','Try moving the organs into the dish. Discover which organ must stay inside.'],
+ ['先點選器官罐的蓋子打開，再將盤中的器官放入正確罐子。','Tap a jar lid to open it, then drag the matching organ into the jar.'],
+ ['使用泡鹼完整覆蓋全身，包含頭、肩、手臂、軀幹與雙腿。','Cover the entire body with natron, including the head, shoulders, arms, torso, and legs.'],
+ ['拿起香油與樹脂刷，完整塗抹全身每個區域。','Use the oil and resin brush to coat every part of the body.'],
+ ['沿著發光引導線包紮全身；完成後整具木乃伊都應被亞麻布包覆。','Follow the glowing guides to wrap the entire body until the mummy is fully covered.'],
+ ['將三個護身符拖到標示位置，完成後覆上最後一層布。','Drag three amulets to the marked spots. A final linen layer will cover them.'],
+ ['選擇面具顏色，再將面具拖曳到頭部。','Choose a mask color, then drag the mask onto the head.'],
+ ['先完成象徵性祝禱，接著開棺、安放木乃伊並關上棺蓋。','Complete the symbolic ritual, open the coffin, place the mummy inside, and close the lid.']
+];
+const tips=[
+ ['先用水壺把全身每個區域都淋濕，再用布巾把所有水痕擦掉。','First soak every body region with the water jug, then wipe away all wet marks with the cloth.'],
+ ['先從右側抓住細長的工具，拉到鼻子上方；再拖走粉紅色模型。這是非血腥教學示意。','Drag the hook from the right to the nose, then move the pink model away. This is a non-graphic teaching illustration.'],
+ ['每個器官都會發光。若某個器官放錯地方，請按照畫面提醒把它拖回原位。','Every organ glows. If one does not belong in the dish, follow the hint and drag it back.'],
+ ['器官罐由左至右：人頭（肝）、狒狒頭（肺）、胡狼頭（胃）、隼頭（腸）。','Left to right: human (liver), baboon (lungs), jackal (stomach), falcon (intestines).'],
+ ['泡鹼要覆蓋全身所有區域；白色塗層會保留在人體最上方。','Natron must cover every body region. The white layer stays visible on top.'],
+ ['香油與樹脂完成後，整具身體都會呈現較深的乾燥色澤。','After the oil and resin step, the whole body should show a darker preserved tone.'],
+ ['請依序包紮雙腿、向上翹起的腳板、軀幹、雙肩、手臂與頭部；腳板也必須全部蓋住。','Wrap the legs, raised feet, torso, shoulders, arms, and head. The feet must be covered, too.'],
+ ['先閱讀每個護身符應放的位置：聖甲蟲在胸口、荷魯斯之眼在上腹、生命之符在下腹。','Read the placement guide first: scarab on the chest, Eye of Horus on the upper abdomen, and ankh on the lower abdomen.'],
+ ['點選下方顏色按鈕，再拖曳面具到頭部光圈。','Choose a color, then drag the mask onto the head target.'],
+ ['先拖動彎曲權杖到木乃伊頭部，點選棺蓋開啟，再拖曳木乃伊進棺，最後點蓋子關上。','Drag the ritual staff to the head, tap to open the lid, drag the mummy in, then tap the lid to close it.']
+];
+const targetCounts=[3,3,4,4,3,3,7,3,1,4];
+const ORIG={lungs:[620,377],liver:[713,375],stomach:[777,392],intestines:[693,416],heart:[574,398]};
+const ORGAN_KEYS=['lungs','liver','stomach','intestines'];
+const jarData=[{id:'liver',head:'human',zh:'人頭 · 肝',en:'Human · Liver',x:442},{id:'lungs',head:'baboon',zh:'狒狒 · 肺',en:'Baboon · Lungs',x:610},{id:'stomach',head:'jackal',zh:'胡狼 · 胃',en:'Jackal · Stomach',x:778},{id:'intestines',head:'falcon',zh:'隼 · 腸',en:'Falcon · Intestines',x:946}];
+const wrapJobs=[{id:'legs',zh:'雙腿',en:'Legs',a:[832,390],b:[1067,397],clip:'clipLegs',rect:[794,336,310,112]},{id:'feet',zh:'腳板',en:'Feet',a:[1097,412],b:[1096,336],clip:'clipFoot',rect:[1042,315,84,125]},{id:'torso',zh:'軀幹',en:'Torso',a:[538,388],b:[795,398],clip:'clipTorso',rect:[515,318,318,134]},{id:'shoulderFar',zh:'後側肩膀',en:'Far shoulder',a:[437,350],b:[566,366],clip:'clipShoulderFar',rect:[416,324,157,72]},{id:'shoulderNear',zh:'前側肩膀',en:'Near shoulder',a:[445,412],b:[557,429],clip:'clipShoulderNear',rect:[430,391,142,67]},{id:'arms',zh:'手臂',en:'Arm',a:[493,421],b:[745,437],clip:'clipArms',rect:[460,394,305,73]},{id:'head',zh:'頭部',en:'Head',a:[296,381],b:[418,382],clip:'clipHead',rect:[275,316,163,128]}];
+const amuletData=[{id:'scarab',name:['聖甲蟲','Scarab'],x:585,y:377,sx:970,sy:507},{id:'eye',name:['荷魯斯之眼','Eye of Horus'],x:675,y:386,sx:1047,sy:507},{id:'ankh',name:['生命之符','Ankh'],x:756,y:416,sx:1124,sy:507}];
+const ZONE_RULES={head:3,neck:2,shoulder:3,chest:4,belly:4,arm:4,hip:3,legs:6,feet:2};const ZONE_TOTAL=Object.keys(ZONE_RULES).length;const dataKey='mummy_maker_v8_water_sync_2026';
+function fresh(){return {version:8,step:0,max:0,finished:false,clean:{water:[],cloth:[]},brain:{hook:false,disposed:false},organs:[],heartInTray:false,jars:[],openJars:[],natron:[],oil:[],coatPaths:{natron:[],oil:[]},wrap:[],amulets:[],mask:{color:0,placed:false},burial:{ritual:false,coffinOpen:false,inside:false,closed:false}}}
+let state=fresh(),enFirst=false,muted=false,drag=null,timer=null,sndCtx=null,paintMode='water',paintKeys=new Set(),lastPaint=null,wrapProgress=0;
+let wetIndex=new Map(),wipedIndex=new Set(),wetElements=new Map(),paintHudRaf=0,paintZoneSet=new Set(),coatRaf=0;
+// The painting surface and the visible clipping surface are the same SVG geometry.
+// Avoids unpaintable gaps between the previous rectangular hit zones.
+const paintShapes=[...document.querySelector('#bodyClip').children];
+const paintHitPoint=svg.createSVGPoint();
+function insideBody(x,y){
+  if(x<265||x>1125||y<297||y>465)return false;
+  paintHitPoint.x=x;paintHitPoint.y=y;
+  return paintShapes.some(shape=>shape.isPointInFill(paintHitPoint));
+}
+function indexWetElements(){
+  wetElements=new Map();
+  $('paintMarks')?.querySelectorAll('[data-wet-key]').forEach(el=>wetElements.set(el.dataset.wetKey,el));
+}
+function reconcileWetVisual(){
+  if(state.step!==0)return;
+  const marks=$('paintMarks');if(!marks)return;
+  if(remainingWater()===0){marks.replaceChildren();wetElements.clear();return}
+  // DOM and completion checks are driven from exactly the same wet-mark set.
+  for(const [key,element] of wetElements){
+    if(wipedIndex.has(key)||!wetIndex.has(key)){element.remove();wetElements.delete(key)}
+  }
+}
+
+function prepareCoatStroke(p){if(state.step!==4&&state.step!==5)return;const mode=state.step===4?'natron':'oil';const color=mode==='natron'?'#fff7e7':'#b56a28',alpha=mode==='natron'?'.94':'.42';const path=document.createElementNS(NS,'path');path.setAttribute('stroke',color);path.setAttribute('opacity',alpha);path.setAttribute('stroke-width','52');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-linejoin','round');path.setAttribute('fill','none');$('paintMarks').append(path);drag.coatPath=path;drag.coatD=`M${p.x.toFixed(1)} ${p.y.toFixed(1)}l.01 0`;drag.coatMode=mode;path.setAttribute('d',drag.coatD)}
+function appendCoatStroke(p){if(!drag?.coatPath)return;const last=drag.coatLast||drag.point;const dist=Math.hypot(p.x-last.x,p.y-last.y);if(dist<1.8)return;drag.coatLast=p;drag.coatD+=`L${p.x.toFixed(1)} ${p.y.toFixed(1)}`;if(!coatRaf){coatRaf=requestAnimationFrame(()=>{coatRaf=0;if(drag?.coatPath)drag.coatPath.setAttribute('d',drag.coatD)})}}
+function finishCoatStroke(d){if(!d.coatPath)return;d.coatPath.setAttribute('d',d.coatD);state.coatPaths[d.coatMode].push(d.coatD);if(coatRaf){cancelAnimationFrame(coatRaf);coatRaf=0}}
+function hydrateWetIndex(){wetIndex=new Map();for(const a of state.clean.water)wetIndex.set(wetCellKey(a[0],a[1]),a);wipedIndex=new Set(state.clean.cloth.map(a=>wetCellKey(a[0],a[1])).filter(key=>wetIndex.has(key)))}
+function updatePaintHudSoon(){if(paintHudRaf)return;paintHudRaf=requestAnimationFrame(()=>{paintHudRaf=0;const [n,total]=stageProgress();$('counter').textContent=`${n} / ${total}`;$('bar').style.width=`${100*n/total}%`;$('nextBtn').disabled=!completed();$('nextBtn').textContent=completed()?txt('下一步 →','Next step →'):txt('完成後繼續','Complete to continue');$('cue').textContent=completed()?txt('本步驟完成！','Step complete!'):cueText()})}
+function remainingWater(){return Math.max(0,wetIndex.size-wipedIndex.size)}
+function updateTowelCursor(p,isTouch=false){const el=$('towelCursor');if(!el)return;if(state.step!==0||paintMode!=='cloth'||!$('lobby').hidden){el.setAttribute('visibility','hidden');return}el.setAttribute('transform',`translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})`);el.setAttribute('visibility',isTouch&&!drag?'hidden':'visible')}
+function eraseWetNear(x,y){
+  // Wiping is intentionally NOT restricted to getZone: even a wet circle near the
+  // outer silhouette must be removable by brushing its visible edge.
+  const cx=Math.floor(x/18),cy=Math.floor(y/18);
+  for(let dy=-3;dy<=3;dy++)for(let dx=-3;dx<=3;dx++){
+    const key=`${cx+dx}|${cy+dy}`;
+    if(wipedIndex.has(key))continue;
+    const a=wetIndex.get(key);
+    if(a&&Math.hypot(a[0]-x,a[1]-y)<=35){
+      wipedIndex.add(key);state.clean.cloth.push(a);
+      wetElements.get(key)?.remove();wetElements.delete(key);
+    }
+  }
+}
+
+function load(){try{const a=JSON.parse(localStorage.getItem(dataKey));if(!a||a.version!==8)return null;return {...fresh(),...a,clean:{...fresh().clean,...a.clean},brain:{...fresh().brain,...a.brain},mask:{...fresh().mask,...a.mask},coatPaths:{natron:[],oil:[],...(a.coatPaths||{})},burial:{...fresh().burial,...a.burial}}}catch{return null}}
+function save(){try{localStorage.setItem(dataKey,JSON.stringify(state))}catch{}}
+function txt(zh,en){return enFirst?`${en} / ${zh}`:`${zh} / ${en}`}
+function tspan(zh,en){return enFirst?`<tspan>${en}</tspan><tspan font-size="11" dy="16" x="0">${zh}</tspan>`:`<tspan>${zh}</tspan><tspan font-size="11" dy="16" x="0">${en}</tspan>`}
+function ptr(e){const pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;const m=svg.getScreenCTM();return m?pt.matrixTransform(m.inverse()):{x:0,y:0}}
+function sound(good=true){if(muted)return;try{sndCtx??=new(window.AudioContext||window.webkitAudioContext)();const now=sndCtx.currentTime,osc=sndCtx.createOscillator(),gain=sndCtx.createGain();osc.type=good?'sine':'triangle';osc.frequency.setValueAtTime(good?460:208,now);osc.frequency.exponentialRampToValueAtTime(good?720:148,now+.15);gain.gain.setValueAtTime(.038,now);gain.gain.exponentialRampToValueAtTime(.0001,now+.19);osc.connect(gain).connect(sndCtx.destination);osc.start(now);osc.stop(now+.2)}catch{}}
+function toast(a,b,error=false){$('toast').innerHTML=`${enFirst?b:a}<br><small style="font-weight:600">${enFirst?a:b}</small>`;$('toast').classList.toggle('error',error);$('toast').classList.add('show');sound(!error);clearTimeout(timer);timer=setTimeout(()=>$('toast').classList.remove('show'),2350)}
+function stageProgress(){switch(state.step){case 0:{const wet=qualify(state.clean.water),total=wetIndex.size,left=remainingWater(),wiped=total-left;const cleanProgress=wet===ZONE_TOTAL&&left===0?ZONE_TOTAL:Math.min(ZONE_TOTAL-1,total?Math.floor(ZONE_TOTAL*wiped/total):0);return [wet+cleanProgress,ZONE_TOTAL*2]}case 1:return [Number(state.brain.hook)+Number(state.brain.disposed),2];case 2:return [state.organs.length,4];case 3:return [state.jars.length,4];case 4:return [qualify(state.natron),ZONE_TOTAL];case 5:return [qualify(state.oil),ZONE_TOTAL];case 6:return [state.wrap.length,wrapJobs.length];case 7:return [state.amulets.length,3];case 8:return [Number(state.mask.placed),1];case 9:return [Object.values(state.burial).filter(Boolean).length,4];default:return [0,1]}}
+function completed(){const [n,m]=stageProgress();return n===m&&(state.step!==2||!state.heartInTray)&&(state.step!==0||(remainingWater()===0&&wetElements.size===0))}
+function qualify(list){const counts=Object.fromEntries(Object.keys(ZONE_RULES).map(k=>[k,new Set()]));for(const z of list){if(counts[z[2]])counts[z[2]].add(`${Math.floor(z[0]/18)}-${Math.floor(z[1]/18)}`)}return Object.entries(counts).filter(([k,v])=>v.size>=ZONE_RULES[k]).length}
+function getZone(x,y){
+  if(!insideBody(x,y))return null;
+  // Partition continuous SVG shape by x and side, without unpaintable seams.
+  if(x<412)return 'head';
+  if(x<465)return 'neck';
+  if(x<540)return y>=399?'arm':'shoulder';
+  if(x<640)return y>=397?'arm':'chest';
+  if(x<805)return 'belly';
+  if(x<894)return 'hip';
+  if(x<1068)return 'legs';
+  return y<380||x>=1080?'feet':'legs';
+}
+function inDish(x,y){return ((x-1090)/105)**2+((y-520)/58)**2<1.22}
+function inJar(x,y){return jarData.find(j=>Math.abs(j.x-x)<52&&Math.abs(548-y)<83)}
+function currentDay(){return [1,1,1,1,2,40,60,65,68,70][state.step]}
+function navRender(){const root=$('nav');root.innerHTML=labels.map((l,i)=>`<button type="button" data-nav="${i}" class="${i===state.step?'active':i<state.max?'done':''}" ${i>state.max?'disabled':''}><span class="num">${String(i+1).padStart(2,'0')}</span>${enFirst?l[1]:l[0]}<small>${enFirst?l[0]:l[1]}</small></button>`).join('')}
+function updateUI(){scene.dataset.stage=state.step;navRender();const i=state.step,l=labels[i],d=details[i];$('eyebrow').textContent=`STEP ${String(i+1).padStart(2,'0')} / 10`;$('titleZh').textContent=enFirst?l[1]:l[0];$('titleEn').textContent=enFirst?l[0]:l[1];$('description').textContent=txt(...d);$('hint').textContent=txt(...tips[i]);$('footTitle').textContent=txt(...l);$('footDesc').textContent=txt(...d);$('stepNum').textContent=String(i+1).padStart(2,'0');$('day').textContent=`DAY ${String(currentDay()).padStart(2,'0')} / 70`;
+const [n,total]=stageProgress();$('counter').textContent=`${n} / ${total}`;$('bar').style.width=`${100*n/total}%`;$('nextBtn').disabled=!completed();$('nextBtn').textContent=completed()?txt('下一步 →','Next step →'):txt('完成後繼續','Complete to continue');if(i===9&&completed())$('nextBtn').textContent=txt('完成作品 →','Finish & view →');$('cue').textContent=completed()?txt('本步驟完成！','Step complete!'):cueText();
+$('controls').innerHTML=controlsMarkup();$('controls').querySelectorAll('[data-paint]').forEach(b=>b.classList.toggle('on',b.dataset.paint===paintMode));}
+function cueText(){switch(state.step){case 0:return paintMode==='water'?txt('選擇水壺後在人體上拖曳灑水','Drag over the body to wash'):txt('拖動布巾游標擦除水痕','Use the towel cursor to wipe water away');case 1:return state.brain.hook?txt('拖曳粉紅色模型至處理盆','Move the pink model to the bowl'):txt('拖動工具到鼻部','Drag the tool to the nose');case 2:return state.heartInTray?txt('請把心臟拖回身體','Return the heart to the body'):txt('拖動器官到右方保存盤','Drag organs onto the dish');case 3:return txt('開罐蓋，再將正確的器官拖進罐內','Open the lid and match each organ');case 4:case 5:return txt('在人體上滑動，直到全身每個區域都被覆蓋','Brush over the body until every region is covered');case 6:return txt('沿著虛線拖動發光布卷','Follow the glowing linen guide');case 7:return txt('將發光護身符拖到標示位置','Drag amulets to glowing targets');case 8:return txt('選色後將面具拖至頭部','Choose a color and position the mask');case 9:return !state.burial.ritual?txt('先用權杖完成象徵性儀式','Perform the symbolic ritual'):!state.burial.coffinOpen?txt('點選棺蓋打開','Tap the lid to open'):!state.burial.inside?txt('將木乃伊拖入棺木','Drag the mummy into the coffin'):txt('點選棺蓋關上','Tap the lid to close');}}
+function controlsMarkup(){switch(state.step){case 0:return `<button data-paint="water">${txt('水壺','Water jug')}</button><button data-paint="cloth">${txt('布巾','Cloth')}</button>`;case 4:return `<button class="on" data-paint="natron">${txt('泡鹼鏟','Natron scoop')}</button>`;case 5:return `<button class="on" data-paint="oil">${txt('香油刷','Oil brush')}</button>`;case 8:return ['金色 / Gold','藍綠 / Turquoise','赤陶 / Terracotta'].map((x,j)=>`<button data-mask="${j}" class="${state.mask.color===j?'on':''}">${x}</button>`).join('');default:return ''}}
+function actorSvg(){if(state.step===9)return '';const d=state.step>=5;const skin=d?'url(#dryG)':'url(#bodyG)';const anatomy=state.step===2;const wrapping=state.step>=6;let out=`<g id="character" stroke="#211e1c" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+<!-- far leg and foot -->
+<path d="M761 362Q855 345 971 372L1059 381Q1075 385 1078 342Q1080 323 1097 322Q1117 326 1108 402Q1104 429 1073 431L790 426Z" fill="${skin}"/>
+<!-- the head, neck and upper torso are ONE continuous silhouette -->
+<path d="M288 397 Q271 378 284 352 Q298 323 335 319 Q345 316 353 318 Q357 313 362 308 Q368 310 372 321 L380 322 Q401 328 421 345 Q444 345 471 339 Q513 328 544 333 Q625 338 746 351 L817 357 Q845 363 849 389 Q854 416 832 430 Q786 442 733 437 L530 437 Q469 429 420 409 Q404 429 370 436 Q328 444 301 425 Q289 416 288 397 Z" fill="${skin}"/>
+<!-- short dark hair, no visible eyes, mouth, or ear -->
+<path d="M287 373 Q273 346 296 324 Q319 304 352 319 Q345 327 319 341 Q299 354 287 373Z" fill="#38271d" stroke="#211e1c" stroke-width="3"/>
+<!-- linen covering pelvis -->
+<path d="M740 353 L823 360 Q845 376 841 407 L830 432 L738 434 Q754 394 740 353 Z" fill="#f7efdf"/>
+<path d="M781 357 Q798 399 786 431" fill="none" stroke="#9f936d" stroke-width="2"/>
+<!-- near arm; no rectangle or stroke crossing the neck -->
+<path d="M513 416 Q570 410 625 417 Q694 418 749 423 Q772 434 749 442 Q732 449 703 449 L538 448 Q516 443 508 434 Z" fill="${skin}" stroke="none"/>
+<path d="M522 416 Q617 416 749 423 Q772 434 749 442 Q732 449 703 449 L538 448" fill="none" stroke="#211e1c" stroke-width="5"/>
+</g>`;
+if(anatomy)out+=`<g id="anatomyBase"><path d="M548 359Q606 347 663 359Q747 352 817 368L819 426Q744 446 663 432Q605 442 550 421Z" fill="#efbd9d" stroke="#966b54" stroke-width="4" stroke-dasharray="7 8"/></g>`;if(wrapping){const done=state.step===6?state.wrap:wrapJobs.map(j=>j.id);for(const j of wrapJobs){if(done.includes(j.id)){const [x,y,w,h]=j.rect;out+=`<g clip-path="url(#${j.clip})" class="linen-region"><rect x="${x}" y="${y}" width="${w}" height="${h}" fill="url(#linenStripes)"/><rect x="${x}" y="${y}" width="${w}" height="${h}" fill="none" stroke="#766347" stroke-width="3"/></g>`}}if(done.includes('feet'))out+=`<path d="M1057 371Q1072 388 1078 342Q1081 324 1096 323Q1114 327 1108 399Q1104 429 1073 430L1051 429Q1065 406 1057 371Z" fill="url(#linenStripes)" stroke="#6f6048" stroke-width="3"/>`;if(done.includes('shoulderNear'))out+=`<path d="M445 348Q487 339 538 355L562 392 559 432Q510 453 453 426L451 406Q461 378 445 348Z" fill="url(#linenStripes)" stroke="#776449" stroke-width="2"/>`;if(done.length===wrapJobs.length||state.step>=7){out+=`<g clip-path="url(#bodyClip)" opacity=".96"><path d="M300 332L1088 436" stroke="#efdfbd" stroke-width="22"/><path d="M322 430L1080 338" stroke="#e7d2a8" stroke-width="16"/><path d="M512 320L1000 440" stroke="#f4e6c5" stroke-width="18" opacity=".72"/></g>`}if(state.step>=8){out+=`<path d="M547 350L814 437M555 438L818 365" stroke="#f4e6c5" stroke-width="25" opacity=".55"/>`}}if(state.step>=8&&state.mask.placed)out+=maskSvg(355,380,.94,false);return out;}
+const organsArt={lungs:`<path d="M-4-22C-23-31-33-8-30 14Q-27 27-16 28Q-9 18-7 8Q-6 2-4-5M4-22C23-31 33-8 30 14Q27 27 16 28Q9 18 7 8Q6 2 4-5" fill="#9f5f6a" stroke="#5e343e" stroke-width="2.6"/><path d="M0-26V4" stroke="#f4dcb4" stroke-width="4"/><path d="M-4 1Q-13 9-14 18M4 1Q13 9 14 18" fill="none" stroke="#7d4954" stroke-width="2"/>`,liver:`<path d="M-31-5Q-27-25-4-28Q20-30 31-14Q31 10 13 19Q-4 25-22 18Q-33 11-31-5Z" fill="#7e3f34" stroke="#4f2823" stroke-width="2.8"/><path d="M-17-7Q-2 2 13-8" stroke="#a06a5e" fill="none" stroke-width="2.5"/>`,stomach:`<path d="M-10-28Q6-22 6-6Q5 7 17 18Q23 29 11 34Q-7 35-17 23Q-28 9-25-7Q-19-19-10-28Z" fill="#d5a18f" stroke="#6f4d43" stroke-width="2.8"/><path d="M-1-27Q4-40 15-42" fill="none" stroke="#6f4d43" stroke-width="4" stroke-linecap="round"/><path d="M-12 4Q-4 12 7 14" fill="none" stroke="#b77e6f" stroke-width="2.2"/>`,intestines:`<path d="M-28-17Q-28-34-11-34H8Q26-34 26-18Q26-4 16 2Q28 9 28 22Q28 35 14 35H-15Q-29 35-29 21Q-29 7-16 2Q-28-3-28-17Z" fill="#c6937f" stroke="#6a4c42" stroke-width="2.7"/><path d="M-16-19Q-5-27 7-19Q16-13 12-3Q22 4 16 15Q9 26-3 21Q-15 27-19 14Q-24 4-14-4Q-21-11-16-19Z" fill="none" stroke="#8f6558" stroke-width="3"/>`,heart:`<path d="M0 28Q-25 11-28-8Q-30-28-12-31Q-2-31 6-21Q13-31 25-29Q38-25 39-9Q40 13 0 28Z" fill="#8e3133" stroke="#4d1f25" stroke-width="2.8"/><path d="M12-25Q14-39 28-44" fill="none" stroke="#e8c5af" stroke-width="4" stroke-linecap="round"/>`};
+function piece(id,x,y,scale=1,attrs=''){return `<g class="organ-piece interactive shimmer" data-piece="${id}" ${attrs} transform="translate(${x} ${y}) scale(${scale})"><circle r="32" fill="#fff0b6" fill-opacity=".12" stroke="#ffec9a" stroke-dasharray="4 5" stroke-width="2"/>${organsArt[id]}<circle r="33" fill="transparent" stroke="none"/></g>`}
+function dish(x=1090,y=520,labelZh='保存盤',labelEn='Collection dish'){return `<g id="dish"><ellipse cx="${x}" cy="${y+10}" rx="103" ry="51" fill="#45372a" opacity=".28" filter="url(#softShadow)"/><ellipse cx="${x}" cy="${y}" rx="107" ry="49" fill="#a97a4c" stroke="#533c2c" stroke-width="6"/><ellipse cx="${x}" cy="${y-8}" rx="91" ry="32" fill="#e6c58d" stroke="#6d5132" stroke-width="3"/><ellipse id="dishHighlight" cx="${x}" cy="${y-8}" rx="84" ry="27" fill="#fff4a6" fill-opacity=".10" stroke="#ffdd86" stroke-dasharray="6 9" stroke-width="3"/><text x="${x}" y="${y+75}" fill="#342f25" stroke="#fff0c4" stroke-width="4" paint-order="stroke" font-size="17" font-weight="900" text-anchor="middle">${labelZh} / ${labelEn}</text></g>`}
+const miniTrayPos=[[1053,509],[1094,503],[1125,518],[1067,535]];
+function organScene(){let out=`<g id="organsOnBody">`;for(const id of ORGAN_KEYS){if(!state.organs.includes(id)){const [x,y]=ORIG[id];out+=piece(id,x,y,.94,'data-place="body"')}}if(!state.heartInTray)out+=piece('heart',...ORIG.heart,.65,'data-place="body"');out+=`</g>`;out+=dish();out+=`<g id="trayItems">`;state.organs.forEach((id,i)=>{const [x,y]=miniTrayPos[i];out+=piece(id,x,y,.66,'data-place="tray" data-fixed="true"')});if(state.heartInTray)out+=piece('heart',1100,542,.72,'data-place="tray"');out+=`</g>`;out+=`<text x="651" y="301" text-anchor="middle" font-size="15" font-weight="800" fill="#5c422e" stroke="#fff1c7" stroke-width="5" paint-order="stroke">${txt('拖曳器官到保存盤 · 心臟應留在體內','Drag organs to the dish · the heart should stay in the body')}</text>`;return out}
+function jarArt(j){const x=j.x,y=558,open=state.openJars.includes(j.id),packed=state.jars.includes(j.id);const animal=j.head;let head='';if(animal==='human')head=`<ellipse cx="0" cy="-69" rx="28" ry="28" fill="#b77a54"/><path d="M-30-67Q-34-100 2-99Q35-100 29-69" fill="#3d3d3e" stroke-width="3"/><path d="M-8-70h4m12 0h4" stroke-width="3"/><path d="M-6-54Q0-51 6-54" fill="none" stroke-width="2"/>`;if(animal==='baboon')head=`<ellipse cx="0" cy="-72" rx="26" ry="25" fill="#aa5e40"/><ellipse cx="-31" cy="-74" rx="13" ry="16" fill="#eed4a6"/><ellipse cx="31" cy="-74" rx="13" ry="16" fill="#eed4a6"/><ellipse cy="-64" rx="14" ry="18" fill="#d6a16b"/><circle cx="-9" cy="-77" r="3"/><circle cx="9" cy="-77" r="3"/>`;if(animal==='jackal')head=`<path d="M-26-68L-22-114-5-94 10-119 26-87 24-66 3-53-25-61Z" fill="#3e4547"/><path d="M-22-114L-17-87-5-94M10-119L13-89 24-87" fill="#dbb278" stroke-width="4"/><path d="M-9-72L34-62 26-54-5-56Z" fill="#47484a"/><circle cx="-8" cy="-77" r="3" fill="#d3b070"/>`;if(animal==='falcon')head=`<path d="M-29-91Q0-113 30-91L24-62 0-51-24-62Z" fill="#b99348"/><path d="M-10-81Q0-74 10-81L0-56Z" fill="#e4b05b"/><circle cx="-15" cy="-85" r="4"/><circle cx="15" cy="-85" r="4"/>`;
+return `<g class="selectable" data-jar="${j.id}" transform="translate(${x} ${y})" stroke="#403327" stroke-width="3.5" stroke-linejoin="round"><path d="M-43-48Q-55-14-44 24L-31 73Q0 89 31 73L44 24Q56-14 43-48Z" fill="${packed?'#cbb77e':'#e8cb91'}"/><path d="M-36-15H36M-31 29H31" stroke="#886e44" stroke-width="2"/><rect x="-40" y="4" width="80" height="66" rx="5" fill="#fff0c7" stroke="#73552e" stroke-width="2.2"/><path d="M-34 32H34" stroke="#cba875" stroke-width="1.8"/><ellipse cx="0" cy="-50" rx="44" ry="12" fill="#9d7541"/><ellipse cx="0" cy="-50" rx="36" ry="8" fill="#6e563e"/><g class="${!packed?'shimmer':''}" data-lid="${j.id}" transform="translate(0 ${open&&!packed?-60:0})">${head}</g><rect x="-47" y="-121" width="94" height="35" fill="transparent" stroke="none" data-lid="${j.id}" transform="translate(0 ${open&&!packed?-60:0})"/><text x="0" y="23" text-anchor="middle" stroke="none" fill="#34281b" font-size="12" font-weight="900" pointer-events="none">${j.zh.replace(' · ','：')}</text><text x="0" y="45" text-anchor="middle" stroke="none" fill="#5a4b34" font-size="10.5" font-weight="750" pointer-events="none">${j.en.split(' · ')[0]}</text><text x="0" y="59" text-anchor="middle" stroke="none" fill="#5a4b34" font-size="10.5" font-weight="750" pointer-events="none">${j.en.split(' · ')[1]}</text>${packed?`<circle cx="33" cy="-13" r="11" fill="#4d8d65" stroke="#f8df94" stroke-width="2"/><path d="M27-13l5 5 9-12" stroke="#fff4ce" stroke-width="3" fill="none"/>`:''}</g>`}
+function jarsScene(){let out=`<rect x="286" y="470" width="751" height="13" rx="6" fill="#9b7243" stroke="#5c452a" stroke-width="3"/>`;const starts=[[480,285],[632,285],[785,285],[937,285]];ORGAN_KEYS.forEach((id,i)=>{if(!state.jars.includes(id))out+=piece(id,starts[i][0],starts[i][1],.7,'data-place="shelf"')});for(const j of jarData)out+=jarArt(j);return out}
+function wetCellKey(x,y){return `${Math.floor(x/18)}|${Math.floor(y/18)}`}
+function paintScene(){const natron=state.step===4,clean=state.step===0;let marks='';
+if(clean){const erased=new Set(state.clean.cloth.map(([x,y])=>wetCellKey(x,y)));
+marks=state.clean.water.filter(([x,y])=>!erased.has(wetCellKey(x,y))).map(([x,y])=>`<circle data-wet-key="${wetCellKey(x,y)}" cx="${x}" cy="${y}" r="24" fill="#84d4ea" fill-opacity=".66"/>`).join('');
+}else{const mode=natron?'natron':'oil',paths=state.coatPaths?.[mode]||[],color=natron?'#fff7e7':'#b56a28',opacity=natron?'.94':'.42';marks=paths.map(d=>`<path d="${d}" fill="none" stroke="${color}" stroke-width="52" stroke-linecap="round" stroke-linejoin="round" opacity="${opacity}"/>`).join('');if(!paths.length)marks+=(natron?state.natron:state.oil).map(([x,y])=>`<circle cx="${x}" cy="${y}" r="26" fill="${color}" opacity="${opacity}"/>`).join('')}
+return `<g clip-path="url(#bodyClip)" class="pointer-none"><g id="paintMarks">${marks}</g><g id="paintMarks2"></g></g>
+<g id="paintDecor" transform="translate(1120 530)" class="shimmer pointer-none">${natron?`<path d="M-86-18Q-67 67 0 58Q68 67 86-18" fill="#a67a48" stroke="#59422b" stroke-width="5"/><ellipse cy="-18" rx="88" ry="37" fill="#e8cc9c" stroke="#6f5239" stroke-width="4"/><ellipse cy="-23" rx="65" ry="22" fill="#fff7e7" stroke="#cdbf9e" stroke-width="2"/>`:clean?paintMode==='water'?`<path d="M-35-55Q-61-3-25 41H26Q63-3 35-55Z" fill="#b8804d" stroke="#543f31" stroke-width="5"/><path d="M-27-55H26V-72H-27Z" fill="#e3b875" stroke="#543f31" stroke-width="4"/><path d="M-34-36L-74-17" stroke="#6b4a33" stroke-width="14"/>`:`<g><rect x="-52" y="-24" width="104" height="64" rx="10" fill="url(#towelPattern)" stroke="#7f6b51" stroke-width="4"/><path d="M-26-24V40M0-24V40M26-24V40" stroke="#fff8eb" stroke-width="3" opacity=".8"/></g>`:`<path d="M-32-44Q-56 22-16 55H19Q56 17 31-44Z" fill="#a88340" stroke="#60452c" stroke-width="5"/><rect x="-23" y="-65" width="46" height="23" rx="4" fill="#e3c17e" stroke="#60452c" stroke-width="4"/><path d="M-12-19q11-18 23 1" fill="none" stroke="#e8c987" stroke-width="4"/>`}</g><text x="1120" y="624" fill="#392e21" stroke="#fbe4b3" stroke-width="4" paint-order="stroke" text-anchor="middle" font-size="17" font-weight="800">${natron?txt('泡鹼','Natron'):clean?paintMode==='water'?txt('清水','Water'):txt('布巾','Cloth'):txt('香油與樹脂','Oil & resin')}</text>`}
+function brainScene(){let out=`<g id="brainModel">`;if(state.brain.hook&&!state.brain.disposed){out+=`<g class="interactive shimmer" data-brain="true" transform="translate(392 331)"><path d="M-32-4Q-35-23-19-26Q-10-40 5-32Q22-39 26-24Q39-19 31-5Q37 14 18 16Q7 30-6 19Q-26 24-32 8Z" fill="#e9b0c2" stroke="#5b383d" stroke-width="4"/><path d="M-22-11q8-8 16 2m4-18q5 11-1 16m15-13q12 11 0 17m13 5q-16 2-11 17m-31-10q10-5 14 12" fill="none" stroke="#9b6475" stroke-width="3"/></g>`}out+='</g>';
+out+=dish(1086,553, '處理盆','Disposal bowl');
+out+=`<g data-hook="true" class="interactive shimmer" transform="translate(1080 502)"><path d="M-15 16Q-31-9-12-33Q1-47 13-24Q23-3 6 12" fill="none" stroke="#3c4140" stroke-width="9" stroke-linecap="round"/><path d="M7 12L35 52" stroke="#7e5631" stroke-width="10" stroke-linecap="round"/><circle r="29" fill="transparent"/></g>`;
+out+=`<circle cx="371" cy="310" r="28" class="${!state.brain.hook?'shimmer':''}" fill="#f5e39a" fill-opacity=".14" stroke="#f9e9a7" stroke-dasharray="5 7" stroke-width="3"/>`;if(state.brain.disposed)out+=`<text x="1086" y="558" font-size="30" text-anchor="middle" fill="#48846f" font-weight="900">✓</text>`;return out}
+function wrapScene(){const t=wrapJobs.find(j=>!state.wrap.includes(j.id));if(!t)return `<text x="655" y="300" text-anchor="middle" font-size="25" font-weight="800" fill="#496c4f" stroke="#fff8db" stroke-width="5" paint-order="stroke">${txt('全部包紮完成','All wraps complete')}</text>`;return `<g class="pointer-none"><line x1="${t.a[0]}" y1="${t.a[1]}" x2="${t.b[0]}" y2="${t.b[1]}" stroke="#fff2aa" stroke-width="9" stroke-linecap="round" stroke-dasharray="5 16"/><circle cx="${t.b[0]}" cy="${t.b[1]}" r="20" fill="#f7dc8c" fill-opacity=".28" stroke="#fff5b6" stroke-width="4" stroke-dasharray="6 5"/><text x="650" y="296" font-size="18" font-weight="900" fill="#3a4030" stroke="#fbeec6" stroke-width="5" paint-order="stroke" text-anchor="middle">${txt(t.zh,t.en)}</text><path id="wrapTrail" d="" fill="none" stroke="#fff6d8" stroke-width="22" stroke-linecap="round"/></g><g id="wrapHandle" class="interactive shimmer" transform="translate(${t.a[0]} ${t.a[1]})"><rect x="-25" y="-17" width="50" height="34" rx="7" fill="#efdcb6" stroke="#5b4a35" stroke-width="4"/><ellipse cx="-23" cy="0" rx="10" ry="18" fill="#fff1d1" stroke="#5b4a35" stroke-width="4"/><ellipse cx="-23" cy="0" rx="3.7" ry="7" fill="#816749"/><path d="M-7-15V15M7-15V15M19-15V15" stroke="#a08b65" stroke-width="2.5"/><circle r="35" fill="transparent"/></g>`}
+function amuletArt(id){if(id==='scarab')return `<ellipse rx="17" ry="12" fill="#64ab96" stroke="#335a52" stroke-width="3"/><path d="M0-10V10M-10 0H10M-13-5L-23-16M13-5L23-16M-11 7L-21 16M11 7L21 16" stroke="#2e7160" stroke-width="3" fill="none"/>`;if(id==='eye')return `<path d="M-26 0Q0-22 27 0Q0 19-26 0Z" fill="#eadcaf" stroke="#2a7776" stroke-width="4"/><circle r="8" fill="#285e67"/><path d="M0 9L-4 26M12 6L19 19" fill="none" stroke="#2e7472" stroke-width="3"/>`;return `<path d="M0-13Q-12-13-12-24Q-12-36 0-36Q12-36 12-24Q12-13 0-13ZM0-12V29M-18 1H18" fill="none" stroke="#d3a654" stroke-width="9" stroke-linecap="round"/>`}
+function amuletScene(){let out=`<text x="690" y="318" text-anchor="middle" font-size="16" font-weight="800" fill="#5b422e" stroke="#fff1c7" stroke-width="5" paint-order="stroke">${txt('聖甲蟲→胸口｜荷魯斯之眼→上腹｜生命之符→下腹','Scarab → chest | Eye of Horus → upper abdomen | Ankh → lower abdomen')}</text><g>`;for(const a of amuletData){if(!state.amulets.includes(a.id)){out+=`<circle cx="${a.x}" cy="${a.y}" r="27" fill="#fff5a6" fill-opacity=".14" stroke="#fff2a0" stroke-width="3" stroke-dasharray="5 5" class="sparkle"/>`;out+=`<g class="interactive shimmer" data-amulet="${a.id}" transform="translate(${a.sx} ${a.sy})">${amuletArt(a.id)}<circle r="35" fill="transparent"/></g>`}else out+=`<g transform="translate(${a.x} ${a.y})">${amuletArt(a.id)}</g>`}out+='</g>';if(state.amulets.length===3)out+=`<g opacity=".93"><path d="M542 352L815 434M554 439L810 363" stroke="#ecddb9" stroke-width="18"/></g>`;return out}
+function maskSvg(x,y,scale=1,draggable=false){const colors=[['#e6b653','#2c766c'],['#60b2a9','#e6b653'],['#bd6a4a','#dcb16c']],c=colors[state.mask.color];return `<g ${draggable?'data-mask-drag="1" class="interactive shimmer"':''} transform="translate(${x} ${y}) scale(${scale})" stroke="#39302a" stroke-linejoin="round" stroke-width="4"><path d="M-65-9Q-65-61 0-74Q66-61 65-9L52 38Q0 76-52 38Z" fill="${c[1]}"/><path d="M-45-45Q0-72 43-45L41 38Q0 61-41 38Z" fill="${c[0]}"/><path d="M0-8l-5 23h10" fill="none" stroke-width="3"/><path d="M-57-19L-43-8M57-19L43-8" stroke="${c[0]}" stroke-width="10"/><path d="M-62 6L-43 18M62 6L43 18" stroke="#e4d7ab" stroke-width="10"/><circle r="76" fill="transparent" stroke="none"/></g>`}
+function maskScene(){let out=`<circle cx="355" cy="380" r="87" fill="#fff4b0" fill-opacity=".11" stroke="#fff1a5" stroke-width="4" stroke-dasharray="6 7" class="${!state.mask.placed?'sparkle':''}"/>`;if(!state.mask.placed)out+=maskSvg(1090,527,.7,true);return out}
+function mummyToken(x,y,scale=1){return `<g id="mummyToken" class="interactive ${!state.burial.inside?'shimmer':''}" transform="translate(${x} ${y}) scale(${scale})"><path d="M-180-28Q-160-48-126-42L136-35Q173-35 183-8L175 35L-132 41Q-178 34-180-28Z" fill="url(#linenStripes)" stroke="#302b26" stroke-width="6"/><ellipse cx="-160" cy="0" rx="58" ry="53" fill="#ead7ae" stroke="#302b26" stroke-width="6"/><path d="M-215-33Q-165-66-118-34L-112 28Q-162 65-216 25Z" fill="#d9aa50" stroke="#2a302c" stroke-width="6"/><path d="M-211-18H-117M-212 15H-117" stroke="#42857e" stroke-width="13"/><ellipse cx="-166" cy="0" rx="20" ry="27" fill="#e8c673" stroke="#322b27" stroke-width="3"/><path d="M-95-30L40 38M-95 37L47-33" stroke="#e1c6a1" stroke-width="22"/><path d="M55-35L130 35M60 35L132-35" stroke="#e1c6a1" stroke-width="10"/><rect x="-219" y="-61" width="408" height="122" fill="transparent" stroke="none"/></g>`}
+function burialScene(){let out=`<g id="tombDecor"><path d="M255 252H1165" stroke="#e2c27d" stroke-width="9"/><path d="M275 262Q320 220 360 265M390 265v-28m-14 12h28M450 242v32m25-34l-12 25 17 9m34-29h27m-16-16v43" fill="none" stroke="#3c7164" stroke-width="5"/></g>`;
+const b=state.burial;out+=`<g id="coffin"><path d="M750 463Q737 424 766 397L1135 396Q1167 412 1145 464L1122 579L779 581Z" fill="#aa6840" stroke="#42382d" stroke-width="7"/><path d="M785 424L1114 423 1101 548 796 553Z" fill="#3a6259" stroke="#d1ab5e" stroke-width="6"/><path d="M824 433V540M883 433V540M943 433V540M1007 433V540M1070 433V540" stroke="#e1ae58" stroke-width="4" opacity=".7"/>`;
+if(b.inside)out+=mummyToken(950,486,.42);
+if(!b.coffinOpen||b.closed){out+=`<g data-coffin="1" class="selectable shimmer"><path d="M748 460Q732 421 765 385L1140 386Q1169 405 1149 463L1127 586L773 585Z" fill="#d7a45b" stroke="#3d342b" stroke-width="7"/><path d="M786 435L1119 435 1104 551 793 550Z" fill="#50847b" stroke="#efc16b" stroke-width="6"/><path d="M839 429Q900 490 839 551M1052 429Q996 490 1052 551" stroke="#e8c06d" stroke-width="14" fill="none"/><ellipse cx="945" cy="480" rx="52" ry="45" fill="#e2b261" stroke="#4c4330" stroke-width="5"/><path d="M945 462l-5 21h10" fill="none" stroke="#4f483b" stroke-width="4"/></g>`}else out+=`<g data-coffin="1" class="selectable shimmer" transform="translate(-10 -175)"><path d="M748 460Q732 421 765 385L1140 386Q1169 405 1149 463L1127 500 773 500Z" fill="#d7a45b" stroke="#3d342b" stroke-width="7"/><path d="M788 433H1118" stroke="#52857c" stroke-width="21"/></g>`;out+='</g>';
+if(!b.inside)out+=mummyToken(487,401,.68);
+if(!b.ritual)out+=`<g data-staff="1" class="interactive shimmer" transform="translate(1045 260)"><path d="M0 29V-50Q-22-64-20-41Q-19-26 0-32" stroke="#d6ae59" stroke-width="10" fill="none" stroke-linecap="round"/><circle r="40" fill="transparent"/></g>`;
+out+=`<text x="950" y="644" text-anchor="middle" fill="#403526" stroke="#fff0c3" stroke-width="4" paint-order="stroke" font-size="18" font-weight="800">${txt('彩繪棺木','Painted sarcophagus')}</text>`;return out}
+function stageProps(){switch(state.step){case 0:case 4:case 5:return paintScene();case 1:return brainScene();case 2:return organScene();case 3:return jarsScene();case 6:return wrapScene();case 7:return amuletScene();case 8:return maskScene();case 9:return burialScene();default:return ''}}
+function render(){drag=null;paintKeys.clear();hydrateWetIndex();$('actor').innerHTML=actorSvg();$('stageProps').innerHTML=stageProps();indexWetElements();reconcileWetVisual();$('dragLayer').replaceChildren();$('towelCursor').setAttribute('visibility','hidden');$('hint').classList.remove('open');updateUI();save()}
+function selectPaint(v){if(state.step===0){if(v==='cloth'&&qualify(state.clean.water)!==ZONE_TOTAL){toast('先用水壺把全身都淋濕','Wash the whole body with water first',true);return}paintMode=v}else paintMode=v;updateUI();$('stageProps').innerHTML=stageProps();indexWetElements();reconcileWetVisual();$('towelCursor').setAttribute('visibility','hidden');sound()}
+function addCircle(parent,x,y,fill,opacity=.8,r=26){const c=document.createElementNS(NS,'circle');c.setAttribute('cx',x);c.setAttribute('cy',y);c.setAttribute('r',r);c.setAttribute('fill',fill);c.setAttribute('fill-opacity',opacity);parent?.append(c);return c}
+function paintAt(x,y){
+  if(state.step===0&&paintMode==='cloth'){
+    const before=wipedIndex.size;
+    eraseWetNear(x,y);
+    if(wipedIndex.size!==before)updatePaintHudSoon();
+    return;
+  }
+  const zone=getZone(x,y);if(!zone)return;
+  const list=state.step===0?state.clean.water:(state.step===4?state.natron:state.oil);
+  const a=[Math.round(x),Math.round(y),zone];
+  const key=wetCellKey(a[0],a[1]);
+  if(paintKeys.has(key))return;
+  paintKeys.add(key);
+  // Reuse cached grid cells; data persists across separate drags.
+  if(!paintZoneSet.size)for(const v of list)paintZoneSet.add(wetCellKey(v[0],v[1]));
+  if(paintZoneSet.has(key))return;
+  paintZoneSet.add(key);
+  list.push(a);
+  const v=state.step===0?['#84d4ea',.66,24]:state.step===4?['#fff9e7',.94,27]:['#b56a28',.32,27];
+  if(state.step===0){
+    const c=addCircle($('paintMarks'),x,y,v[0],v[1],v[2]);
+    c.setAttribute('data-wet-key',key);
+    wetIndex.set(key,a);wetElements.set(key,c);
+  }
+  if(state.step===0&&paintMode==='water'&&qualify(state.clean.water)===ZONE_TOTAL){
+    paintMode='cloth';paintZoneSet.clear();
+    toast('全身已淋濕！改用布巾把水痕擦掉','Body is wet! Use the towel to wipe away the water');
+    $('stageProps').innerHTML=paintScene();indexWetElements();
+  }
+  updatePaintHudSoon();
+}
+function beginDrag(e,info){drag={...info,id:e.pointerId,point:ptr(e)};try{svg.setPointerCapture(e.pointerId)}catch{}e.preventDefault()}
+function ghostMarkup(d,x,y){switch(d.type){case 'organ':return piece(d.key,x,y,d.key==='heart'?.9:1.07,'class="organ-piece shimmer"');case 'brain':return `<g transform="translate(${x} ${y})" class="shimmer"><path d="M-30-10Q-32-30-17-27Q-5-36 5-30Q25-36 28-18Q40 0 28 8Q31 25 15 18Q0 31-11 17Q-29 18-30-10Z" fill="#eab1c3" stroke="#5a3c43" stroke-width="4"/></g>`;case 'hook':return `<g transform="translate(${x} ${y})" class="shimmer"><path d="M-12 18Q-32-11-10-35Q14-53 17-23Q21-6 7 9L35 48" fill="none" stroke="#42413f" stroke-width="9" stroke-linecap="round"/></g>`;case 'amulet':return `<g transform="translate(${x} ${y}) scale(1.3)" class="shimmer">${amuletArt(d.key)}</g>`;case 'mask':return maskSvg(x,y,.7,false);case 'staff':return `<g transform="translate(${x} ${y})" class="shimmer"><path d="M0 25V-43Q-22-65-20-37Q-18-24 0-30" fill="none" stroke="#e1b35d" stroke-width="10"/></g>`;case 'mummy':return `<g transform="translate(${x-480} ${y-410})">${mummyToken(487,401,.68)}</g>`;default:return ''}}
+function stagePointerDown(e){if(!$('lobby').hidden||state.finished)return;const p=ptr(e),el=e.target,closest=sel=>el.closest(sel);
+if([0,4,5].includes(state.step)){if(state.step===0&&paintMode==='cloth'&&qualify(state.clean.water)!==ZONE_TOTAL)return;paintKeys=new Set();paintZoneSet=new Set();beginDrag(e,{type:'paint',last:p,modeAtStart:paintMode});prepareCoatStroke(p);updateTowelCursor(p,e.pointerType==='touch');paintAt(p.x,p.y);return}
+if(state.step===1){if(closest('[data-hook]')&&!state.brain.hook)return beginDrag(e,{type:'hook'});if(closest('[data-brain]')&&state.brain.hook&&!state.brain.disposed)return beginDrag(e,{type:'brain'});return}
+if(state.step===2){const o=closest('[data-piece]');if(!o||o.hasAttribute('data-fixed'))return;beginDrag(e,{type:'organ',key:o.dataset.piece,source:o.dataset.place});o.style.opacity='.3';return}
+if(state.step===3){const lid=closest('[data-lid]');if(lid){const k=lid.dataset.lid;if(!state.jars.includes(k)){state.openJars=state.openJars.includes(k)?state.openJars.filter(x=>x!==k):[...state.openJars,k];render();sound()}return}const o=closest('[data-piece]');if(o){beginDrag(e,{type:'organJar',key:o.dataset.piece});o.style.opacity='.3'}return}
+if(state.step===6){if(closest('#wrapHandle')){const job=wrapJobs.find(j=>!state.wrap.includes(j.id));if(job)beginDrag(e,{type:'wrap',job,progress:0})}return}
+if(state.step===7){const o=closest('[data-amulet]');if(o){beginDrag(e,{type:'amulet',key:o.dataset.amulet});o.style.opacity='.2'}return}
+if(state.step===8){if(closest('[data-mask-drag]')&&!state.mask.placed)beginDrag(e,{type:'mask'});return}
+if(state.step===9){const b=state.burial;if(!b.ritual&&closest('[data-staff]')){beginDrag(e,{type:'staff'});return}if(b.ritual&&closest('[data-coffin]')&&!b.inside&&!b.coffinOpen){b.coffinOpen=true;toast('棺木已打開','The coffin is open');render();return}if(b.ritual&&b.coffinOpen&&!b.inside&&closest('#mummyToken')){beginDrag(e,{type:'mummy'});return}if(b.inside&&!b.closed&&closest('[data-coffin]')){b.closed=true;toast('棺木已封閉','The coffin is closed');render();return}}
+}
+function stagePointerMove(e){const p=ptr(e);if(state.step===0&&paintMode==='cloth'&&$('lobby').hidden)updateTowelCursor(p,e.pointerType==='touch');if(!drag||drag.id!==e.pointerId)return;const d=drag;
+if(d.type==='paint'){if(state.step===0&&d.modeAtStart!==paintMode){d.last=p;return;}const dd=Math.hypot(p.x-d.last.x,p.y-d.last.y);const n=Math.min(100,Math.max(1,Math.ceil(dd/7)));for(let i=1;i<=n;i++)paintAt(d.last.x+(p.x-d.last.x)*i/n,d.last.y+(p.y-d.last.y)*i/n);appendCoatStroke(p);d.last=p;return}
+if(d.type==='wrap'){const j=d.job,vx=j.b[0]-j.a[0],vy=j.b[1]-j.a[1],len=Math.hypot(vx,vy),u=((p.x-j.a[0])*vx+(p.y-j.a[1])*vy)/(len*len),perp=Math.abs((p.x-j.a[0])*vy-(p.y-j.a[1])*vx)/len;if(perp<76&&u>=d.progress-.11){d.progress=Math.max(d.progress,Math.min(1,u));const cx=j.a[0]+vx*d.progress,cy=j.a[1]+vy*d.progress;$('wrapHandle')?.setAttribute('transform',`translate(${cx} ${cy})`);$('wrapTrail')?.setAttribute('d',`M${j.a[0]} ${j.a[1]}L${cx} ${cy}`)}return}
+$('dragLayer').innerHTML=ghostMarkup(d,p.x,p.y);if(d.type==='organ')$('dishHighlight')?.setAttribute('fill-opacity',inDish(p.x,p.y)?'.64':'.1');}
+function stagePointerUp(e){if(!drag||drag.id!==e.pointerId)return;const d=drag,p=ptr(e);drag=null;try{if(svg.hasPointerCapture(e.pointerId))svg.releasePointerCapture(e.pointerId)}catch{}
+let success=false;if(d.type==='paint'){
+ finishCoatStroke(d);
+ if(state.step===0&&paintMode==='cloth')reconcileWetVisual();
+ success=completed();
+ if(success)toast(state.step===0?'全身水痕已擦乾！':'塗抹完成！',state.step===0?'All visible water marks are gone!':'Coating complete!');
+ if(e.pointerType==='touch')$('towelCursor').setAttribute('visibility','hidden');
+ paintKeys.clear();paintZoneSet.clear();updateUI();save();return;
+}
+if(d.type==='hook'){if(Math.hypot(p.x-365,p.y-321)<115){state.brain.hook=true;success=true;toast('工具操作完成，現在移開腦部模型','Tool complete. Move the brain model.')}else toast('請將工具拖到鼻子附近','Move the tool near the nose',true)}
+if(d.type==='brain'){if(Math.hypot(p.x-1086,p.y-553)<135){state.brain.disposed=true;success=true;toast('腦部處理完成','Brain preparation complete')}else toast('請放進右側處理盆','Move it into the bowl',true)}
+if(d.type==='organ'){
+ if(d.key==='heart'){
+   if(d.source==='body'&&inDish(p.x,p.y)){state.heartInTray=true;toast('這個器官必須保留在人體內，請拖回原位！','This organ must stay inside. Drag it back!',true)}
+   else if(d.source==='tray'&&Math.hypot(p.x-ORIG.heart[0],p.y-ORIG.heart[1])<145){state.heartInTray=false;success=true;toast('正確！請把這個器官留在體內','Correct! This organ stays inside')}
+   else if(d.source==='tray'){toast('把它拖回原來的位置','Drag it back to its original place',true)}
+ }else if(inDish(p.x,p.y)&&!state.organs.includes(d.key)){state.organs.push(d.key);success=true;toast('已放到保存盤上方','Placed ON TOP of the dish')}else toast('請將器官拖到保存盤','Drag the organ into the dish',true)
+}
+if(d.type==='organJar'){const jar=inJar(p.x,p.y);if(!jar){toast('請先打開器官罐，再放入器官','Open a jar and drop the organ in',true)}else if(jar.id!==d.key){toast('這個器官屬於另一個罐子，請再試一次','This organ belongs in a different jar',true)}else if(!state.openJars.includes(jar.id)){toast('請先點選罐蓋打開','Tap the lid to open it first',true)}else{state.jars.push(jar.id);state.openJars=state.openJars.filter(x=>x!==jar.id);success=true;toast('器官保存成功！','The organ is safely stored!')}}
+if(d.type==='wrap'){if(d.progress>=.86){state.wrap.push(d.job.id);success=true;toast(`已包紮${d.job.zh}`,`Wrapped: ${d.job.en}`)}else toast('請沿著虛線拖到終點','Follow the guide to the end',true)}
+if(d.type==='amulet'){const a=amuletData.find(x=>x.id===d.key);if(a&&Math.hypot(p.x-a.x,p.y-a.y)<70){state.amulets.push(d.key);success=true;toast('護身符已放置','Amulet placed')}else if(a){const map={scarab:['聖甲蟲應放在胸口','Place the scarab on the chest'],eye:['荷魯斯之眼應放在上腹','Place the Eye of Horus on the upper abdomen'],ankh:['生命之符應放在下腹','Place the ankh on the lower abdomen']};toast(...map[a.id],true)}else toast('請放在正確的發光位置','Drop onto the correct glowing target',true)}
+if(d.type==='mask'){if(Math.hypot(p.x-355,p.y-380)<100){state.mask.placed=true;success=true;toast('面具已固定','Mask attached')}else toast('把面具拖到頭部','Move the mask to the head',true)}
+if(d.type==='staff'){if(Math.hypot(p.x-340,p.y-390)<210||Math.hypot(p.x-485,p.y-400)<190){state.burial.ritual=true;success=true;toast('象徵性祝禱完成','Symbolic ritual complete')}else toast('請將權杖移至木乃伊頭部','Move the staff to the mummy’s head',true)}
+if(d.type==='mummy'){if(p.x>755&&p.y>360&&p.y<590){state.burial.inside=true;success=true;toast('木乃伊已安放於棺內','The mummy is inside the coffin')}else toast('請拖曳木乃伊到右邊棺木','Drag the mummy into the coffin',true)}
+render();if(success)sound();}
+function next(){if(!completed())return;const i=state.step;state.max=Math.max(state.max,i+1);if(i===9){state.finished=true;save();showFinal();return}state.step=i+1;paintMode=state.step===4?'natron':state.step===5?'oil':'water';render();sound()}
+function resetStage(){if(!confirm(txt('確定要重做目前步驟嗎？','Retry this step?')))return;const b=fresh();if(state.step===0)state.clean=b.clean;if(state.step===1)state.brain=b.brain;if(state.step===2){state.organs=[];state.heartInTray=false}if(state.step===3){state.jars=[];state.openJars=[]}if(state.step===4)state.natron=[];if(state.step===5)state.oil=[];if(state.step===6)state.wrap=[];if(state.step===7)state.amulets=[];if(state.step===8)state.mask=b.mask;if(state.step===9)state.burial=b.burial;paintMode=state.step===0?'water':state.step===4?'natron':'oil';render()}
+function showFinal(){$('lobby').hidden=false;$('lobbyTitle').textContent=txt('你的木乃伊完成了！','Your mummy is complete!');$('lobbyDesc').innerHTML='你已完成從清潔、器官保存到包紮與入棺的十個步驟。<br>You completed all 10 mummification steps!';$('newBtn').textContent=txt('再玩一次','Play again');$('resumeBtn').hidden=false;$('resumeBtn').textContent=txt('回顧作品','View the workshop')}
+function showLobby(){state.finished=false;save();$('lobby').hidden=false;$('lobbyTitle').textContent=txt('古埃及木乃伊製作師','Ancient Egyptian Mummification');$('lobbyDesc').innerHTML='十個連續步驟，親手拖曳器官、保存器官、塗抹泡鹼與香油、包紮亞麻布、放置護身符並完成入棺。<br>10 interactive steps · 中文 + English';$('newBtn').textContent=txt('開始新遊戲','New game');$('resumeBtn').hidden=!(state.step>0||state.organs.length||state.clean.water.length);$('resumeBtn').textContent=txt('繼續進度','Continue')}
+function restart(){state=fresh();paintMode='water';$('lobby').hidden=true;render();sound()}
+function resume(){const loaded=load();if(loaded)state=loaded;state.finished=false;$('lobby').hidden=true;render()}
+svg.addEventListener('pointerleave',()=>{$('towelCursor').setAttribute('visibility','hidden')});svg.addEventListener('pointerdown',stagePointerDown);svg.addEventListener('pointermove',stagePointerMove);svg.addEventListener('pointerup',stagePointerUp);svg.addEventListener('pointercancel',stagePointerUp);
+$('nextBtn').addEventListener('click',next);$('retryBtn').addEventListener('click',resetStage);$('newBtn').addEventListener('click',restart);$('resumeBtn').addEventListener('click',resume);$('homeBtn').addEventListener('click',()=>{showLobby();sound()});$('hintBtn').addEventListener('click',()=>$('hint').classList.toggle('open'));$('orderBtn').addEventListener('click',()=>{enFirst=!enFirst;render();$('orderBtn').textContent=enFirst?'EN / 中':'中 / EN'});$('soundBtn').addEventListener('click',()=>{muted=!muted;$('soundBtn').style.opacity=muted?'.5':'1';sound()});$('fullscreenBtn').addEventListener('click',()=>{if(document.fullscreenElement)document.exitFullscreen?.();else $('app').requestFullscreen?.().catch(()=>{});sound()});$('nav').addEventListener('click',e=>{const b=e.target.closest('[data-nav]');if(!b)return;const n=Number(b.dataset.nav);if(n<=state.max){state.step=n;paintMode=n===4?'natron':n===5?'oil':'water';render()}});$('controls').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.paint)selectPaint(b.dataset.paint);if(b.dataset.mask!==undefined){state.mask.color=Number(b.dataset.mask);render();sound()}});document.addEventListener('contextmenu',e=>e.preventDefault(),{capture:true});document.addEventListener('dragstart',e=>e.preventDefault());document.addEventListener('selectstart',e=>{if(e.target.closest('.scene'))e.preventDefault()});
+const prev=load();if(prev)state=prev;render();$('lobby').hidden=false;$('resumeBtn').hidden=!(state.step>0||state.clean.water.length||state.organs.length||state.max>0);if(state.finished)showFinal();
+})();
+</script></body></html>
